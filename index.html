@@ -60,7 +60,7 @@
             100% { transform: translateY(0px); }
         }
     </style>
-    <script src="https://www.google.com/recaptcha/api.js?render=6Le3yDErAAAAANL2NDQXdqFFLLPa7QFPpT1ZeXNQ"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfTRTIrAAAAAL0LflYOLmbmL1wDLF680Eer9WIM"></script>
 </head>
 <body>
     <!-- Шапка с анимацией -->
@@ -620,7 +620,7 @@
             
             const form = event.target;
             grecaptcha.ready(function() {
-                grecaptcha.execute('6Le3yDErAAAAANL2NDQXdqFFLLPa7QFPpT1ZeXNQ', {action: 'submit'}).then(function(token) {
+                grecaptcha.execute('6LfTRTIrAAAAAL0LflYOLmbmL1wDLF680Eer9WIM', {action: 'submit'}).then(function(token) {
                     // Добавляем токен в форму
                     form.querySelector('#recaptcha-token').value = token;
                     
