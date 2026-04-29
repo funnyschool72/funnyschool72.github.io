@@ -620,9 +620,9 @@
             event.preventDefault();
             
             const form = event.target;
+
             grecaptcha.ready(function() {
                 grecaptcha.execute('6LfTRTIrAAAAAL0LflYOLmbmL1wDLF680Eer9WIM', {action: 'submit'}).then(function(token) {
-                    // Добавляем токен в форму
                     form.querySelector('#recaptcha-token').value = token;
                     
                     const data = {
@@ -634,22 +634,19 @@
                         agree: form.querySelector('#agree').checked,
                         'recaptcha-token': token
                     };
-                    
-                    console.log('Отправляемые данные:', data); // Отладка
-                    
+
+                    // Показываем модалку СРАЗУ, не ждём ответа сервера
+                    document.getElementById('modal').classList.remove('hidden');
+                    form.reset();
+
+                    // Отправляем в фоне
                     fetch('https://script.google.com/macros/s/AKfycbzE-jDgdk3alY3AMzN3A4X2XfsEFApn2zpY1QxFa3NQGphgbmFjpfBlr-98Uu50JyTK/exec', {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
-                    }).then(() => {
-                        document.getElementById('modal').classList.remove('hidden');
-                        form.reset();
                     }).catch(error => {
-                        console.error('Ошибка:', error);
-                        alert('Ошибка при отправке: ' + error.message);
+                        console.error('Ошибка отправки:', error);
                     });
                 });
             });
