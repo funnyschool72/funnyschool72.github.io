@@ -636,19 +636,13 @@
                     document.getElementById('modal').classList.remove('hidden');
                     form.reset();
     
-                    // Формируем текст сообщения для Telegram
-                    const text = `📩 Новая заявка с сайта Весёлой школы!\n\n👤 Родитель: ${data.name}\n📞 Телефон: ${data.phone}\n👧 Ребёнок: ${data.childName}\n🎂 Возраст: ${data.age}\n🎯 Цель: ${data.goal}`;
-    
-                    // Отправляем напрямую в Telegram
-                    fetch('https://api.telegram.org/bot7637769648:AAHOaakQGxnnwX0R6Kf_452pP7wxmMJx4Bc/sendMessage', {
+                    // Отправляем через Cloudflare Worker
+                    fetch('https://tg-proxy.masovskijartem9.workers.dev', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: '5064689370',
-                            text: text
-                        })
+                        body: JSON.stringify(data)
                     }).catch(error => {
-                        console.error('Ошибка отправки в Telegram:', error);
+                        console.error('Ошибка отправки:', error);
                     });
                 });
             });
