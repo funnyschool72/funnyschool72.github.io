@@ -447,7 +447,27 @@
 
             <!-- Список отзывов -->
             <div id="reviews-list" class="space-y-3 mb-4">
-                <p class="text-center text-gray-400 py-4">Загрузка отзывов...</p>
+                <!-- Скелетон загрузки -->
+                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 animate-pulse">
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gray-200 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2"><div class="h-3.5 bg-gray-200 rounded w-24"></div><div class="h-3 bg-gray-200 rounded w-16"></div></div>
+                            <div class="h-3 bg-gray-200 rounded w-full mb-1.5"></div>
+                            <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 animate-pulse">
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gray-200 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2"><div class="h-3.5 bg-gray-200 rounded w-20"></div><div class="h-3 bg-gray-200 rounded w-14"></div></div>
+                            <div class="h-3 bg-gray-200 rounded w-full mb-1.5"></div>
+                            <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Кнопка "Показать ещё" -->
