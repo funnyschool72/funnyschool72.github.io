@@ -539,6 +539,12 @@
                     '<div class="flex" style="font-size:13px;">' + renderStars(r.rating, 'xs') + '</div>' +
                     '</div>' +
                     '<p class="text-gray-600 text-sm mt-1.5 leading-relaxed">' + r.text + '</p>' +
+                    (r.reply ? '<div class="mt-2.5 ml-2 pl-3 border-l-2 border-blue-300 py-1.5">' +
+                    '<div class="flex items-center gap-1.5 mb-0.5">' +
+                    '<span class="text-xs font-bold text-blue-700">Яна Алексеевна</span>' +
+                    '<span class="text-gray-400 text-xs">' + formatDate(r.reply.createdAt) + '</span>' +
+                    '</div>' +
+                    '<p class="text-gray-600 text-xs leading-relaxed">' + r.reply.text + '</p></div>' : '') +
                     '</div></div></div>';
             }).join('');
 
@@ -604,37 +610,35 @@
             if (rating < 1 || rating > 5) { errEl.textContent = 'Выберите оценку'; errEl.classList.remove('hidden'); return; }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
+            submitBtn.style.opacity = '0.5';
+            submitBtn.style.cursor = 'not-allowed';
 
-            try {
-                var res = await fetch(API_URL + '/reviews', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: name, text: text, rating: rating })
-                });
-                var data = await res.json();
-                if (!res.ok) throw new Error(data.error || 'Ошибка сервера');
+            // Сразу показываем «Спасибо» и сбрасываем форму
+            successEl.textContent = 'Спасибо! Ваш отзыв опубликован.';
+            successEl.classList.remove('hidden');
+            var formRef = this;
+            formRef.reset();
+            selectedRating = 0;
+            highlightStars(0);
+            document.getElementById('char-count').textContent = '0';
 
-                successEl.textContent = 'Спасибо! Ваш отзыв опубликован.';
-                successEl.classList.remove('hidden');
-                this.reset();
-                selectedRating = 0;
-                highlightStars(0);
-                document.getElementById('char-count').textContent = '0';
-                await loadReviews();
+            // Отправляем в фоне
+            fetch(API_URL + '/reviews', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, text: text, rating: rating })
+            }).then(function(res) { return res.json(); })
+            .then(function() { loadReviews(); })
+            .catch(function() {});
 
-                // Скрываем форму через 2 сек
-                setTimeout(function() {
-                    document.getElementById('review-form-wrap').classList.add('hidden');
-                    successEl.classList.add('hidden');
-                }, 2000);
-            } catch (err) {
-                errEl.textContent = err.message;
-                errEl.classList.remove('hidden');
-            } finally {
+            // Через 3 сек скрываем форму и разблокируем кнопку
+            setTimeout(function() {
+                document.getElementById('review-form-wrap').classList.add('hidden');
+                successEl.classList.add('hidden');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить';
-            }
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+            }, 3000);
         });
 
         function renderStars(count) {
