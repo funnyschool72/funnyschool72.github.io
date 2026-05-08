@@ -381,64 +381,286 @@
     </script>
 
     <!-- Отзывы -->
-    <!-- <section class="py-12 px-4 bg-gray-100">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Отзывы родителей</h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-4">
-                        <img src="https://img.icons8.com/color/48/000000/user-female-circle.png" class="w-12 h-12 mr-4" alt="Мама">
-                        <div>
-                            <h4 class="font-bold text-blue-700">Елена, мама Маши (7 лет)</h4>
-                            <div class="flex">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                            </div>
-                        </div>
+    <section id="reviews" class="py-12 px-4 bg-white">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-blue-800 mb-2">Отзывы родителей</h2>
+            <p class="text-center text-gray-500 mb-8">Узнайте, что говорят о занятиях</p>
+
+            <!-- Компактная статистика + кнопка -->
+            <div class="flex flex-col sm:flex-row items-center justify-between bg-blue-50 rounded-2xl p-5 mb-6 gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="text-center">
+                        <span id="avg-rating" class="text-4xl font-bold text-blue-800">—</span>
+                        <div id="stars-avg" class="flex justify-center mt-1" style="font-size:14px;"></div>
                     </div>
-                    <p class="text-gray-700 italic">"Маша с нетерпением ждёт каждое занятие! За полгода подготовки к школе научилась читать, считать и даже полюбила математику. Спасибо за индивидуальный подход!"</p>
+                    <div class="hidden sm:block w-px h-12 bg-blue-200"></div>
+                    <div id="rating-bars" class="space-y-1" style="min-width:180px;"></div>
+                    <div class="hidden sm:block w-px h-12 bg-blue-200"></div>
+                    <div id="total-reviews" class="text-sm text-gray-500">Загрузка...</div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-4">
-                        <img src="https://img.icons8.com/color/48/000000/user-male-circle.png" class="w-12 h-12 mr-4" alt="Папа">
-                        <div>
-                            <h4 class="font-bold text-blue-700">Андрей, папа Егора (8 лет)</h4>
-                            <div class="flex">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
+                <button id="toggle-form-btn" class="bg-yellow-400 hover:bg-yellow-500 text-blue-800 font-bold py-2 px-5 rounded-full text-sm shadow transition duration-300 whitespace-nowrap">
+                    ✍ Написать отзыв
+                </button>
+            </div>
+
+            <!-- Форма отзыва (скрыта по умолчанию) -->
+            <div id="review-form-wrap" class="hidden mb-6">
+                <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-blue-800">Новый отзыв</h3>
+                        <button id="close-form-btn" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+                    </div>
+                    <form id="review-form">
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <input type="text" id="review-name" maxlength="100" required
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm"
+                                    placeholder="Ваше имя">
+                            </div>
+                            <div>
+                                <div id="star-input" class="flex gap-1 cursor-pointer items-center h-full px-2">
+                                    <span class="text-sm text-gray-500 mr-2">Оценка:</span>
+                                    <span data-star="1" class="text-2xl text-gray-300 hover:text-yellow-400 transition select-none">★</span>
+                                    <span data-star="2" class="text-2xl text-gray-300 hover:text-yellow-400 transition select-none">★</span>
+                                    <span data-star="3" class="text-2xl text-gray-300 hover:text-yellow-400 transition select-none">★</span>
+                                    <span data-star="4" class="text-2xl text-gray-300 hover:text-yellow-400 transition select-none">★</span>
+                                    <span data-star="5" class="text-2xl text-gray-300 hover:text-yellow-400 transition select-none">★</span>
+                                </div>
+                                <input type="hidden" id="review-rating" value="0">
                             </div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 italic">"У сына были проблемы с русским языком, не мог запомнить правила. После 3 месяцев занятий с Анастасией стал делать меньше ошибок, а главное - появился интерес к предмету!"</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-4">
-                        <img src="https://img.icons8.com/color/48/000000/user-female-circle.png" class="w-12 h-12 mr-4" alt="Мама">
-                        <div>
-                            <h4 class="font-bold text-blue-700">Ольга, мама Полины (10 лет)</h4>
-                            <div class="flex">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                                <img src="https://img.icons8.com/color/16/000000/star.png" alt="Звезда">
-                            </div>
+                        <div class="mb-3 relative">
+                            <textarea id="review-text" rows="3" maxlength="1000" required
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm resize-none"
+                                placeholder="Расскажите о вашем опыте занятий..."></textarea>
+                            <span class="absolute bottom-2 right-3 text-xs text-gray-300"><span id="char-count">0</span>/1000</span>
                         </div>
-                    </div>
-                    <p class="text-gray-700 italic">"Отличная подготовка к ВПР! Полина перестала бояться контрольных, научилась справляться с волнением. Результаты превзошли все ожидания. Рекомендую всем родителям!"</p>
+                        <div id="review-error" class="text-red-500 text-sm mb-2 hidden"></div>
+                        <div id="review-success" class="text-green-600 text-sm mb-2 hidden"></div>
+                        <button type="submit" id="review-submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm shadow transition duration-300">
+                            Отправить
+                        </button>
+                    </form>
                 </div>
             </div>
+
+            <!-- Список отзывов -->
+            <div id="reviews-list" class="space-y-3 mb-4">
+                <p class="text-center text-gray-400 py-4">Загрузка отзывов...</p>
+            </div>
+
+            <!-- Кнопка "Показать ещё" -->
+            <div id="show-more-wrap" class="text-center hidden">
+                <button id="show-more-btn" class="text-blue-600 hover:text-blue-800 font-medium text-sm transition duration-300">
+                    Показать ещё ↓
+                </button>
+            </div>
         </div>
-    </section> -->
+    </section>
+
+    <!-- Скрипт отзывов -->
+    <script>
+    (function() {
+        const API_URL = 'https://reviews-api.masovskijartem9.workers.dev';
+        let allReviews = [];
+        let visibleCount = 4;
+
+        // Показать/скрыть форму
+        document.getElementById('toggle-form-btn').addEventListener('click', function() {
+            const wrap = document.getElementById('review-form-wrap');
+            wrap.classList.toggle('hidden');
+            if (!wrap.classList.contains('hidden')) {
+                wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+        document.getElementById('close-form-btn').addEventListener('click', function() {
+            document.getElementById('review-form-wrap').classList.add('hidden');
+        });
+
+        async function loadReviews() {
+            try {
+                const res = await fetch(API_URL + '/reviews');
+                const data = await res.json();
+                allReviews = data.reviews || [];
+                renderStats(data.stats);
+                renderReviews();
+            } catch (e) {
+                document.getElementById('reviews-list').innerHTML =
+                    '<p class="text-center text-gray-400 py-4">Не удалось загрузить отзывы</p>';
+            }
+        }
+
+        function renderStats(stats) {
+            document.getElementById('avg-rating').textContent = stats.total > 0 ? stats.avgRating : '—';
+            document.getElementById('total-reviews').textContent =
+                stats.total > 0 ? stats.total + ' ' + pluralize(stats.total, 'отзыв', 'отзыва', 'отзывов') : 'Пока нет отзывов';
+            document.getElementById('stars-avg').innerHTML = renderStars(Math.round(stats.avgRating), 'sm');
+
+            const barsEl = document.getElementById('rating-bars');
+            barsEl.innerHTML = '';
+            for (let i = 5; i >= 1; i--) {
+                const count = stats.distribution[i] || 0;
+                const pct = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
+                barsEl.innerHTML += '<div class="flex items-center gap-1.5" style="font-size:11px;">' +
+                    '<span class="text-gray-500 w-2 text-right">' + i + '</span>' +
+                    '<span class="text-yellow-400" style="font-size:10px;">★</span>' +
+                    '<div class="bg-gray-200 rounded-full overflow-hidden" style="width:100px;height:6px;">' +
+                    '<div class="bg-yellow-400 rounded-full h-full transition-all duration-500" style="width:' + pct + '%"></div>' +
+                    '</div>' +
+                    '<span class="text-gray-400 w-4 text-right">' + count + '</span>' +
+                    '</div>';
+            }
+        }
+
+        function renderReviews() {
+            const listEl = document.getElementById('reviews-list');
+            if (allReviews.length === 0) {
+                listEl.innerHTML = '<p class="text-center text-gray-400 py-4">Пока нет отзывов. Будьте первым!</p>';
+                document.getElementById('show-more-wrap').classList.add('hidden');
+                return;
+            }
+
+            const visible = allReviews.slice(0, visibleCount);
+            listEl.innerHTML = visible.map(function(r) {
+                const colors = ['bg-blue-500','bg-green-500','bg-yellow-500','bg-purple-500','bg-pink-500','bg-indigo-500'];
+                const color = colors[r.name.charCodeAt(0) % colors.length];
+                return '<div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:shadow-md transition duration-300">' +
+                    '<div class="flex items-start gap-3">' +
+                    '<div class="' + color + ' text-white font-bold w-9 h-9 rounded-full flex items-center justify-center text-sm flex-shrink-0 mt-0.5">' +
+                    r.name.charAt(0).toUpperCase() +
+                    '</div>' +
+                    '<div class="flex-1 min-w-0">' +
+                    '<div class="flex items-center justify-between gap-2 flex-wrap">' +
+                    '<div>' +
+                    '<span class="font-bold text-gray-800 text-sm">' + r.name + '</span>' +
+                    '<span class="text-gray-400 text-xs ml-2">' + formatDate(r.createdAt) + '</span>' +
+                    '</div>' +
+                    '<div class="flex" style="font-size:13px;">' + renderStars(r.rating, 'xs') + '</div>' +
+                    '</div>' +
+                    '<p class="text-gray-600 text-sm mt-1.5 leading-relaxed">' + r.text + '</p>' +
+                    '</div></div></div>';
+            }).join('');
+
+            var wrap = document.getElementById('show-more-wrap');
+            if (allReviews.length > visibleCount) {
+                wrap.classList.remove('hidden');
+            } else {
+                wrap.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('show-more-btn').addEventListener('click', function() {
+            visibleCount += 4;
+            renderReviews();
+        });
+
+        // Звёзды в форме
+        var starInput = document.getElementById('star-input');
+        var ratingInput = document.getElementById('review-rating');
+        var selectedRating = 0;
+
+        starInput.addEventListener('click', function(e) {
+            var star = e.target.closest('[data-star]');
+            if (!star) return;
+            selectedRating = parseInt(star.dataset.star);
+            ratingInput.value = selectedRating;
+            highlightStars(selectedRating);
+        });
+        starInput.addEventListener('mouseover', function(e) {
+            var star = e.target.closest('[data-star]');
+            if (star) highlightStars(parseInt(star.dataset.star));
+        });
+        starInput.addEventListener('mouseleave', function() {
+            highlightStars(selectedRating);
+        });
+
+        function highlightStars(count) {
+            starInput.querySelectorAll('[data-star]').forEach(function(s) {
+                var val = parseInt(s.dataset.star);
+                s.classList.toggle('text-yellow-400', val <= count);
+                s.classList.toggle('text-gray-300', val > count);
+            });
+        }
+
+        document.getElementById('review-text').addEventListener('input', function() {
+            document.getElementById('char-count').textContent = this.value.length;
+        });
+
+        // Отправка
+        document.getElementById('review-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var errEl = document.getElementById('review-error');
+            var successEl = document.getElementById('review-success');
+            var submitBtn = document.getElementById('review-submit');
+            errEl.classList.add('hidden');
+            successEl.classList.add('hidden');
+
+            var name = document.getElementById('review-name').value.trim();
+            var text = document.getElementById('review-text').value.trim();
+            var rating = parseInt(ratingInput.value);
+
+            if (!name || !text) { errEl.textContent = 'Заполните имя и текст отзыва'; errEl.classList.remove('hidden'); return; }
+            if (rating < 1 || rating > 5) { errEl.textContent = 'Выберите оценку'; errEl.classList.remove('hidden'); return; }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправка...';
+
+            try {
+                var res = await fetch(API_URL + '/reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name, text: text, rating: rating })
+                });
+                var data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Ошибка сервера');
+
+                successEl.textContent = 'Спасибо! Ваш отзыв опубликован.';
+                successEl.classList.remove('hidden');
+                this.reset();
+                selectedRating = 0;
+                highlightStars(0);
+                document.getElementById('char-count').textContent = '0';
+                await loadReviews();
+
+                // Скрываем форму через 2 сек
+                setTimeout(function() {
+                    document.getElementById('review-form-wrap').classList.add('hidden');
+                    successEl.classList.add('hidden');
+                }, 2000);
+            } catch (err) {
+                errEl.textContent = err.message;
+                errEl.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить';
+            }
+        });
+
+        function renderStars(count) {
+            var s = '';
+            for (var i = 0; i < 5; i++) {
+                s += '<span class="text-' + (i < count ? 'yellow-400' : 'gray-300') + '">' + (i < count ? '★' : '☆') + '</span>';
+            }
+            return s;
+        }
+
+        function formatDate(ts) {
+            var d = new Date(ts);
+            return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function pluralize(n, one, few, many) {
+            var mod10 = n % 10, mod100 = n % 100;
+            if (mod10 === 1 && mod100 !== 11) return one;
+            if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+            return many;
+        }
+
+        loadReviews();
+    })();
+    </script>
+
 
     <!-- FAQ -->
     <section class="py-12 px-4 bg-white">
@@ -654,4 +876,3 @@
     </script>
 </body>
 </html>
-
