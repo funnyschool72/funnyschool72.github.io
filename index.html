@@ -945,7 +945,7 @@ input::placeholder, textarea::placeholder { color: #9ca3af; }
     <!-- Скрипт отзывов -->
     <script>
     (function() {
-        const API_URL = 'https://api.funny-school.ru';
+        const API_URL = 'https://reviews-api-five.vercel.app/api/reviews';
         let allReviews = [];
         let visibleCount = 4;
 
@@ -963,7 +963,7 @@ input::placeholder, textarea::placeholder { color: #9ca3af; }
 
         async function loadReviews() {
             try {
-                const res = await fetch(API_URL + '/reviews');
+                const res = await fetch(API_URL);
                 const data = await res.json();
                 allReviews = data.reviews || [];
                 renderStats(data.stats);
@@ -1106,7 +1106,7 @@ input::placeholder, textarea::placeholder { color: #9ca3af; }
             document.getElementById('char-count').textContent = '0';
 
             // Отправляем в фоне
-            fetch(API_URL + '/reviews', {
+            fetch(API_URL + '?action=add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, text: text, rating: rating })
