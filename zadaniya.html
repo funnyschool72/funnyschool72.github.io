@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Весёлые задания — Математика и Русский язык 1–4 класс | Весёлая Школа</title>
+    <meta name="description" content="Интерактивные задания по математике (программа Петерсон) и русскому языку для 1, 2, 3 и 4 класса. Учись играя!">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F9F7F0'/%3E%3Cpath d='M6 16h20v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V16z' fill='%231E40AF'/%3E%3Cpath d='M6 12h20v4H6z' fill='%23FBBF24'/%3E%3Cpath d='M10 6l4 6h4l-4-6z' fill='%2310B981'/%3E%3Ccircle cx='22' cy='10' r='2' fill='%23EF4444'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --cream:#f9f7f0; --blue800:#1e40af; --blue700:#1d4ed8; --blue600:#2563eb;
+            --blue500:#3b82f6; --blue50:#eff6ff; --yellow400:#facc15; --yellow500:#eab308;
+            --yellow300:#fde047; --yellow100:#fef9c3; --yellow50:#fefce8;
+            --green500:#22c55e; --green600:#16a34a; --green50:#f0fdf4; --green100:#dcfce7;
+            --red400:#f87171; --red500:#ef4444; --red50:#fef2f2; --gray700:#374151; --gray500:#6b7280;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'Poppins',sans-serif;background-color:var(--cream);color:#333;
+            -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+        img{display:block;max-width:100%;height:auto;}
+        a{color:inherit;text-decoration:none;}
+        button{font-family:inherit;cursor:pointer;border:none;}
+        .container{width:100%;max-width:1024px;margin:0 auto;padding:0 1rem;}
+
+        /* Шапка — как на главной */
+        header{background:var(--yellow100);border-bottom:4px solid var(--yellow300);padding:1rem 0;}
+        .head-row{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:1rem;}
+        @media(min-width:768px){.head-row{flex-direction:row;}}
+        .logo{display:flex;align-items:center;}
+        .logo img{width:3rem;height:3rem;margin-right:.75rem;animation:bounce 2s infinite;}
+        .logo h1{font-size:1.75rem;font-weight:700;color:var(--blue800);}
+        .logo .y{color:var(--yellow500);}
+        nav{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;}
+        .pill{display:inline-flex;align-items:center;font-weight:700;padding:.5rem 1.25rem;
+            border-radius:9999px;box-shadow:0 4px 6px rgba(0,0,0,.1);transition:.3s;}
+        .pill img{width:1.5rem;height:1.5rem;margin-right:.5rem;}
+        .pill-blue{background:var(--blue600);color:#fff;}
+        .pill-blue:hover{background:var(--blue700);}
+        .pill-yellow{background:var(--yellow400);color:var(--blue800);}
+        .pill-yellow:hover{background:var(--yellow500);}
+        .pill-active{outline:3px solid var(--yellow500);outline-offset:2px;}
+        .phone{display:inline-flex;align-items:center;background:var(--green500);color:#fff;font-weight:700;
+            padding:.5rem 1rem;border-radius:9999px;box-shadow:0 4px 6px rgba(0,0,0,.1);}
+        .phone img{width:1.5rem;height:1.5rem;margin-right:.5rem;}
+
+        /* Заголовок раздела */
+        .hero{background:var(--blue50);text-align:center;padding:2.5rem 1rem 1.5rem;}
+        .hero h2{font-size:2rem;font-weight:700;color:var(--blue800);margin-bottom:.5rem;}
+        .hero h2 .y{color:var(--yellow500);}
+        .hero p{font-size:1.15rem;color:var(--gray700);max-width:640px;margin:0 auto;}
+
+        section{padding:2rem 1rem;}
+        .card{background:#fff;border-radius:1rem;box-shadow:0 10px 20px rgba(0,0,0,.08);}
+        h3.title{font-size:1.5rem;font-weight:700;color:var(--blue800);text-align:center;margin-bottom:1.25rem;}
+        .subtitle{text-align:center;color:var(--gray700);margin-bottom:1.5rem;}
+
+        /* Выбор предмета */
+        .grid2{display:grid;grid-template-columns:1fr;gap:1rem;}
+        @media(min-width:640px){.grid2{grid-template-columns:1fr 1fr;}}
+        .grid4{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+        @media(min-width:640px){.grid4{grid-template-columns:repeat(5,1fr);}}
+
+        .choice-tile{border:3px solid transparent;border-radius:1rem;padding:1.5rem 1rem;text-align:center;
+            font-weight:700;font-size:1.15rem;transition:.2s;color:var(--blue800);background:#fff;
+            box-shadow:0 6px 12px rgba(0,0,0,.06);}
+        .choice-tile .emoji{font-size:2.5rem;display:block;margin-bottom:.5rem;}
+        .choice-tile:hover{transform:translateY(-4px);box-shadow:0 12px 20px rgba(0,0,0,.12);}
+        .tile-math{background:var(--yellow50);border-color:var(--yellow300);}
+        .tile-rus{background:var(--blue50);border-color:#bfdbfe;}
+        .tile-grade{background:var(--green50);border-color:var(--green100);font-size:1rem;padding:1rem .5rem;}
+        .tile-vpr{background:#fff7ed;border-color:#fed7aa;font-size:1rem;padding:1rem .5rem;color:#c2410c;}
+        .choice-tile.selected{border-color:var(--green500);background:var(--green100);transform:translateY(-4px);}
+
+        .start-wrap{text-align:center;margin-top:1.75rem;}
+        .btn-start{background:var(--yellow400);color:var(--blue800);font-weight:700;font-size:1.25rem;
+            padding:.9rem 2.5rem;border-radius:9999px;box-shadow:0 8px 16px rgba(0,0,0,.15);transition:.3s;
+            display:inline-flex;align-items:center;gap:.5rem;}
+        .btn-start:hover:not(:disabled){background:var(--yellow500);transform:scale(1.03);}
+        .btn-start:disabled{opacity:.45;cursor:not-allowed;}
+
+        /* Экран заданий */
+        .hidden{display:none;}
+        .quiz-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+        .badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--blue800);color:#fff;
+            font-weight:600;font-size:.9rem;padding:.35rem .9rem;border-radius:9999px;}
+        .score-badge{background:var(--yellow400);color:var(--blue800);}
+        .progress{height:14px;background:#e5e7eb;border-radius:9999px;overflow:hidden;margin-bottom:1.25rem;}
+        .progress-bar{height:100%;background:var(--yellow400);border-radius:9999px;transition:width .4s ease;width:0;}
+        .q-counter{text-align:center;color:var(--gray500);font-weight:600;margin-bottom:.75rem;}
+        .q-emoji{font-size:3rem;text-align:center;margin-bottom:.5rem;}
+        .q-text{font-size:1.4rem;font-weight:700;color:var(--blue800);text-align:center;
+            line-height:1.4;margin-bottom:1.5rem;}
+        .q-visual{font-size:2rem;text-align:center;letter-spacing:.25rem;margin-bottom:1rem;}
+        .q-figure{display:flex;justify-content:center;margin:.25rem 0 1.5rem;}
+        .q-figure svg{max-width:100%;height:auto;}
+        .q-figure:empty{display:none;}
+
+        .options{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+        @media(max-width:420px){.options{grid-template-columns:1fr;}}
+        .opt{background:var(--blue50);border:3px solid #dbeafe;border-radius:1rem;padding:1rem;
+            font-weight:700;font-size:1.25rem;color:var(--blue800);transition:.15s;}
+        .opt:hover:not(:disabled){transform:translateY(-3px);border-color:var(--blue500);}
+        .opt.correct{background:var(--green100);border-color:var(--green500);color:var(--green600);}
+        .opt.wrong{background:var(--red50);border-color:var(--red400);color:var(--red500);}
+        .opt:disabled{cursor:default;}
+
+        .input-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;}
+        .answer-input{font-family:inherit;font-size:1.5rem;font-weight:700;text-align:center;
+            width:160px;max-width:60%;padding:.6rem;border:3px solid #dbeafe;border-radius:1rem;color:var(--blue800);}
+        .answer-input:focus{outline:none;border-color:var(--blue500);}
+        .btn-check{background:var(--blue600);color:#fff;font-weight:700;font-size:1.1rem;
+            padding:.6rem 1.5rem;border-radius:9999px;transition:.2s;}
+        .btn-check:hover:not(:disabled){background:var(--blue700);}
+        .btn-check:disabled{opacity:.5;cursor:default;}
+
+        .feedback{text-align:center;font-weight:700;font-size:1.2rem;margin-top:1.25rem;min-height:1.6rem;}
+        .feedback.ok{color:var(--green600);}
+        .feedback.no{color:var(--red500);}
+        .explain{text-align:center;color:var(--gray700);margin-top:.35rem;font-weight:400;}
+
+        .btn-next{background:var(--yellow400);color:var(--blue800);font-weight:700;font-size:1.15rem;
+            padding:.7rem 2rem;border-radius:9999px;box-shadow:0 6px 12px rgba(0,0,0,.12);transition:.2s;
+            display:inline-flex;align-items:center;gap:.4rem;}
+        .btn-next:hover{background:var(--yellow500);}
+        .next-wrap{display:flex;gap:.75rem;justify-content:center;align-items:center;margin-top:1.5rem;flex-wrap:wrap;}
+        .btn-prev{background:#fff;color:var(--blue700);font-weight:700;font-size:1.1rem;
+            padding:.7rem 1.6rem;border:2px solid #bfdbfe;border-radius:9999px;transition:.2s;
+            display:inline-flex;align-items:center;gap:.4rem;}
+        .btn-prev:hover{background:var(--blue50);border-color:var(--blue500);}
+
+        /* Результат */
+        .result{text-align:center;}
+        .result .stars{font-size:3.5rem;margin:.5rem 0;}
+        .result h3{font-size:1.9rem;font-weight:700;color:var(--blue800);margin-bottom:.5rem;}
+        .result .score-line{font-size:1.3rem;color:var(--gray700);margin-bottom:1.5rem;}
+        .result-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.75rem;}
+        .name-input{font-family:inherit;font-size:1.05rem;text-align:center;padding:.6rem 1rem;border:3px solid #dbeafe;border-radius:1rem;color:var(--blue800);width:280px;max-width:90%;}
+        .name-input:focus{outline:none;border-color:var(--blue500);}
+
+        /* низ */
+        .tools{display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.25rem;color:var(--gray500);}
+        .mute-btn{background:none;font-size:1.4rem;padding:.25rem;border-radius:.5rem;}
+
+        footer{background:#1e3a8a;color:#fff;text-align:center;padding:1.5rem 1rem;margin-top:2rem;font-size:.95rem;}
+        footer a{text-decoration:underline;}
+
+        @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+        @keyframes pop{0%{transform:scale(.8);}60%{transform:scale(1.08);}100%{transform:scale(1);}}
+        .pop{animation:pop .35s ease;}
+        @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container head-row">
+            <a href="index.html" class="logo">
+                <img src="https://img.icons8.com/color/48/000000/school.png" alt="Логотип">
+                <h1><span class="y">Весёлая</span> Школа</h1>
+            </a>
+            <nav>
+                <a href="index.html" class="pill pill-blue">
+                    <img src="https://img.icons8.com/color/48/000000/home.png" alt="">
+                    <span>Главная</span>
+                </a>
+                <a href="zadaniya.html" class="pill pill-yellow pill-active">
+                    <img src="https://img.icons8.com/color/48/000000/prize.png" alt="">
+                    <span>Весёлые задания</span>
+                </a>
+            </nav>
+            <a href="tel:+79829015708" class="phone">
+                <img src="https://img.icons8.com/color/48/000000/phone.png" alt="Телефон">
+                <span>+7 (982) 901-57-08</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h2>Весёлые <span class="y">задания</span> 🎯</h2>
+        <p>Выбирай предмет и класс — и тренируйся играя! Математика по программе Петерсон и русский язык для 1–4 класса.</p>
+    </div>
+
+    <!-- ЭКРАН 1: выбор -->
+    <section id="screen-select">
+        <div class="container">
+            <div class="card" style="padding:1.75rem;">
+                <h3 class="title">1. Выбери предмет</h3>
+                <div class="grid2" id="subjects">
+                    <button class="choice-tile tile-math" data-subject="math">
+                        <span class="emoji">🔢</span>Математика
+                    </button>
+                    <button class="choice-tile tile-rus" data-subject="rus">
+                        <span class="emoji">✏️</span>Русский язык
+                    </button>
+                </div>
+
+                <h3 class="title" style="margin-top:2rem;">2. Выбери класс</h3>
+                <div class="grid4" id="grades">
+                    <button class="choice-tile tile-grade" data-grade="1"><span class="emoji">1️⃣</span>1 класс</button>
+                    <button class="choice-tile tile-grade" data-grade="2"><span class="emoji">2️⃣</span>2 класс</button>
+                    <button class="choice-tile tile-grade" data-grade="3"><span class="emoji">3️⃣</span>3 класс</button>
+                    <button class="choice-tile tile-grade" data-grade="4"><span class="emoji">4️⃣</span>4 класс</button>
+                    <button class="choice-tile tile-vpr" data-grade="vpr4"><span class="emoji">📋</span>ВПР 4 класс</button>
+                </div>
+
+                <div class="start-wrap">
+                    <button id="btn-start" class="btn-start" disabled>Поехали! 🚀</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 2: задания -->
+    <section id="screen-quiz" class="hidden">
+        <div class="container">
+            <div class="card" style="padding:1.75rem;">
+                <div class="quiz-top">
+                    <span class="badge" id="quiz-label">Математика · 1 класс</span>
+                    <span class="badge score-badge" id="quiz-score">⭐ 0</span>
+                </div>
+                <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+                <div class="q-counter" id="q-counter">Задание 1 из 8</div>
+
+                <div id="q-emoji" class="q-emoji"></div>
+                <div id="q-visual" class="q-visual"></div>
+                <div id="q-text" class="q-text"></div>
+                <div id="q-figure" class="q-figure"></div>
+                <div id="answer-area"></div>
+
+                <div id="feedback" class="feedback"></div>
+                <div id="explain" class="explain"></div>
+
+                <div class="next-wrap">
+                    <button id="btn-prev" class="btn-prev hidden">← Назад</button>
+                    <button id="btn-next" class="btn-next hidden">Дальше →</button>
+                </div>
+
+                <div class="tools">
+                    <button id="mute" class="mute-btn" title="Звук вкл/выкл">🔊</button>
+                    <a href="#" id="quit" style="text-decoration:underline;">Выбрать другие задания</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 3: результат -->
+    <section id="screen-result" class="hidden">
+        <div class="container">
+            <div class="card result" style="padding:2.25rem 1.75rem;">
+                <div class="stars" id="result-stars">🌟🌟🌟</div>
+                <h3 id="result-title">Молодец!</h3>
+                <p class="score-line" id="result-score">Ты ответил правильно на 8 из 8 заданий</p>
+                <div class="result-btns">
+                    <input id="student-name" class="name-input" type="text" placeholder="Имя ученика (по желанию)" autocomplete="off">
+                </div>
+                <div class="result-btns">
+                    <button id="btn-save" class="btn-start" style="font-size:1.05rem;padding:.75rem 1.5rem;">📸 Сохранить сводку</button>
+                </div>
+                <div class="result-btns">
+                    <button id="btn-again" class="btn-start">Ещё раз 🔁</button>
+                    <button id="btn-choose" class="pill pill-blue" style="font-size:1.1rem;padding:.7rem 1.5rem;">Другие задания</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Весёлая Школа · Онлайн-занятия для детей 6–10 лет</p>
+        <p style="margin-top:.5rem;"><a href="index.html">На главную</a></p>
+    </footer>
+
+<script>
+/* ================= ДВИЖОК ЗАДАНИЙ ================= */
+const rand = (a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick = arr=>arr[rand(0,arr.length-1)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// варианты ответа к числу: правильный + 3 близких
+function numOptions(correct){
+    const set=new Set([correct]);
+    while(set.size<4){
+        let d=correct+rand(-Math.max(2,Math.round(correct*0.3))-2, Math.max(2,Math.round(correct*0.3))+2);
+        if(d>=0 && d!==correct) set.add(d);
+    }
+    return shuffle([...set]).map(String);
+}
+
+// Прямоугольник на клетчатом поле БЕЗ подписей — ребёнок сам считает клетки (1 клетка = 1 см).
+function rectFigure(a,b){
+    const top=Math.max(a,b), side=Math.min(a,b);
+    const cell=26, m=2;                       // поля по 2 клетки вокруг
+    const cols=top+2*m, rows=side+2*m, ox=14, oy=14;
+    const W=ox*2+cols*cell, H=oy*2+rows*cell;
+    let grid='';
+    for(let i=0;i<=cols;i++){const x=ox+i*cell;grid+=`<line x1="${x}" y1="${oy}" x2="${x}" y2="${oy+rows*cell}" stroke="#94a3b8" stroke-width="1.4"/>`;}
+    for(let j=0;j<=rows;j++){const y=oy+j*cell;grid+=`<line x1="${ox}" y1="${y}" x2="${ox+cols*cell}" y2="${y}" stroke="#94a3b8" stroke-width="1.4"/>`;}
+    const rx=ox+m*cell, ry=oy+m*cell, rw=top*cell, rh=side*cell;
+    return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Прямоугольник на клетчатом поле">`
+      +grid
+      +`<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" fill="#eff6ff" fill-opacity="0.35" stroke="#1e40af" stroke-width="3"/>`
+      +`</svg>`;
+}
+
+// Штамп с зеркально вырезанным словом (буквы отражены слева направо).
+function stampFigure(word){
+    const fs=26, textW=word.length*fs*0.64;
+    const rx=Math.max(118, textW/2+46), ry=68;
+    const W=Math.ceil(2*rx+30), H=Math.ceil(2*ry+58), cx=W/2, cy=ry+36;
+    const handle=`<rect x="${cx-8}" y="8" width="16" height="30" rx="6" fill="#eff6ff" stroke="#1e40af" stroke-width="2.5"/>`
+        +`<rect x="${cx-26}" y="32" width="52" height="12" rx="5" fill="#eff6ff" stroke="#1e40af" stroke-width="2.5"/>`;
+    return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Штамп с зеркальным словом">`
+      +handle
+      +`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="#ffffff" stroke="#1e40af" stroke-width="3"/>`
+      +`<ellipse cx="${cx}" cy="${cy}" rx="${rx-9}" ry="${ry-9}" fill="none" stroke="#93c5fd" stroke-width="1.5"/>`
+      +`<g transform="translate(${cx} ${cy}) scale(-1 1)"><text x="0" y="${fs*0.35}" text-anchor="middle" font-family="Poppins,system-ui,sans-serif" font-size="${fs}" font-weight="700" letter-spacing="2" fill="#1e40af">${word}</text></g>`
+      +`</svg>`;
+}
+
+// Таблица опроса (как в демоверсии ВПР). rows: [[класс, биатлон, синхр.плавание, волейбол, футбол], ...]
+function sportsTable(rows){
+    const b='border:2px solid #1e40af;';
+    const th=b+'padding:7px 10px;text-align:center;';
+    const td=b+'padding:6px 10px;text-align:center;';
+    const tdL=b+'padding:6px 10px;text-align:left;font-weight:600;';
+    let h='<div style="overflow-x:auto;max-width:100%;"><table style="border-collapse:collapse;margin:0 auto;font-size:15px;color:#1f2937;background:#fff;">';
+    h+=`<tr style="background:#fef9c3;color:#1e40af;font-weight:700;"><th style="${th}">Класс</th><th style="${th}">Биатлон</th><th style="${th}">Синхронное плавание</th><th style="${th}">Волейбол</th><th style="${th}">Футбол</th></tr>`;
+    for(const r of rows){h+=`<tr><td style="${tdL}">${r[0]}</td><td style="${td}">${r[1]}</td><td style="${td}">${r[2]}</td><td style="${td}">${r[3]}</td><td style="${td}">${r[4]}</td></tr>`;}
+    return h+'</table></div>';
+}
+
+/* -------- МАТЕМАТИКА (по контрольным работам 1–4 кл. и демоверсии ВПР) -------- */
+const MATH = {
+  1: () => {
+    const pool=[];
+    (()=>{const a=rand(6,13),b=rand(2,Math.min(9,20-a));pool.push({type:'input',mode:'number',emoji:'➕',topic:'Сложение в пределах 20',q:`Найди значение выражения: ${a} + ${b}`,answer:a+b});})();
+    (()=>{const a=rand(11,20),b=rand(2,9);pool.push({type:'input',mode:'number',emoji:'➖',topic:'Вычитание в пределах 20',q:`Найди значение выражения: ${a} − ${b}`,answer:a-b});})();
+    (()=>{const n=rand(5,19);pool.push({type:'input',mode:'number',emoji:'0️⃣',topic:'Сложение и вычитание с нулём',q:`Найди значение выражения: ${n} + 0`,answer:n});})();
+    (()=>{const s=rand(1,4),d=rand(2,4);pool.push({type:'input',mode:'number',emoji:'🔼',topic:'Закономерности (числовые ряды)',q:`Продолжи закономерность — назови следующее число: ${s}, ${s+d}, ${s+2*d}, ...`,answer:s+3*d,explain:`Числа растут на ${d}`});})();
+    (()=>{const s=rand(16,20),d=rand(2,3);pool.push({type:'input',mode:'number',emoji:'🔽',topic:'Закономерности (числовые ряды)',q:`Продолжи закономерность — назови следующее число: ${s}, ${s-d}, ${s-2*d}, ...`,answer:s-3*d,explain:`Числа уменьшаются на ${d}`});})();
+    (()=>{const pairs=[['1 дм',10,'10 см',10],['2 дм',20,'15 см',15],['13 см',13,'1 дм',10],['1 дм 4 см',14,'18 см',18],['11 см',11,'8 см',8],['17 см',17,'2 дм',20]];
+      const p=pick(pairs);pool.push({type:'choice',emoji:'📏',topic:'Сравнение величин (см, дм)',q:`Сравни: ${p[0]} и ${p[2]}. Что поставить между ними?`,choices:['>','<','='],answer:p[1]>p[3]?'>':p[1]<p[3]?'<':'='});})();
+    (()=>{let a=rand(1,20),b=rand(1,20);while(a===b)b=rand(1,20);pool.push({type:'choice',emoji:'⚖️',topic:'Сравнение чисел',q:`Какое число больше: ${a} или ${b}?`,choices:[String(a),String(b)],answer:String(Math.max(a,b))});})();
+    (()=>{const a=rand(4,10),b=rand(2,8),s=a+b;if(s<=20)pool.push({type:'input',mode:'number',emoji:'📮',topic:'Задача на увеличение («на … больше»)',q:`У Васи ${a} марок, а у Саши на ${b} больше. Сколько марок у Саши?`,answer:s,explain:`${a} + ${b} = ${s}`});else pool.push({type:'input',mode:'number',emoji:'📮',topic:'Задача на увеличение («на … больше»)',q:`У Васи 9 марок, а у Саши на 4 больше. Сколько марок у Саши?`,answer:13});})();
+    (()=>{const a=rand(6,12),b=rand(1,a-1);pool.push({type:'input',mode:'number',emoji:'🧸',topic:'Задача на уменьшение («на … меньше»)',q:`У Ани ${a} кукол, а у Кати на ${b} меньше. Сколько кукол у Кати?`,answer:a-b,explain:`${a} − ${b} = ${a-b}`});})();
+    (()=>{const x=rand(2,4),y=rand(2,4),N=x+y+rand(1,4);pool.push({type:'input',mode:'number',emoji:'🍑',topic:'Задача в два действия',q:`Мама купила ${N} кг персиков. Из ${x} кг она сварила компот, а ${y} кг заморозила. Сколько килограммов персиков осталось?`,answer:N-x-y,explain:`${N} − ${x} − ${y} = ${N-x-y}`});})();
+    return pool;
+  },
+  2: () => {
+    const pool=[];
+    (()=>{const a=rand(23,68),b=rand(12,99-a>31?31:99-a);pool.push({type:'input',mode:'number',emoji:'➕',topic:'Сложение двузначных чисел',q:`Вычисли (столбиком): ${a} + ${b}`,answer:a+b});})();
+    (()=>{const a=rand(45,99),b=rand(12,a-10);pool.push({type:'input',mode:'number',emoji:'➖',topic:'Вычитание двузначных чисел',q:`Вычисли (столбиком): ${a} − ${b}`,answer:a-b});})();
+    (()=>{const each=rand(3,6),k=rand(2,3);pool.push({type:'input',mode:'number',emoji:'🍒',topic:'Смысл умножения',q:`Кондитер положил на ${k} торта по ${each} вишен. Сколько всего вишен он использовал?`,answer:each*k,explain:`${each} · ${k} = ${each*k}`});})();
+    (()=>{const parts=rand(2,4),per=rand(2,5),total=parts*per;pool.push({type:'input',mode:'number',emoji:'🥟',topic:'Смысл деления',q:`На ${parts} тарелки разложили поровну ${total} пирожков. Сколько пирожков на одной тарелке?`,answer:per,explain:`${total} : ${parts} = ${per}`});})();
+    (()=>{const term=rand(4,8),cnt=rand(3,4);pool.push({type:'input',mode:'number',emoji:'✖️',topic:'Замена сложения умножением',q:`Замени сложение умножением и вставь число: ${Array(cnt).fill(term).join(' + ')} = ${term} · ...`,answer:cnt,explain:`Слагаемое ${term} повторяется ${cnt} раза`});})();
+    (()=>{const a=rand(2,8),b=rand(2,8);pool.push({type:'input',mode:'number',emoji:'⬛',topic:'Периметр прямоугольника',q:`Найди периметр прямоугольника со сторонами ${a} см и ${b} см.`,answer:2*(a+b),explain:`(${a} + ${b}) · 2 = ${2*(a+b)} (см)`});})();
+    (()=>{const a=rand(3,9),b=rand(5,20);pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: X − ${a} = ${b}. Чему равен X?`,answer:a+b,explain:`X = ${b} + ${a} = ${a+b}`});})();
+    (()=>{const X=rand(10,40),a=rand(3,9);pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: X + ${a} = ${X+a}. Чему равен X?`,answer:X,explain:`X = ${X+a} − ${a} = ${X}`});})();
+    (()=>{const a=rand(20,40),b=rand(5,15),X=a-b;pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: ${a} − X = ${b}. Чему равен X?`,answer:X,explain:`X = ${a} − ${b} = ${X}`});})();
+    (()=>{const d=rand(1,9),c=rand(1,9);pool.push({type:'input',mode:'number',emoji:'📐',topic:'Единицы длины (см, мм)',q:`Вставь пропущенное число: ${d} см ${c} мм = ... мм`,answer:d*10+c,explain:`1 см = 10 мм, значит ${d}·10 + ${c} = ${d*10+c}`});})();
+    (()=>{const d=rand(1,7),c=rand(1,9);pool.push({type:'input',mode:'number',emoji:'📏',topic:'Единицы длины (дм, см)',q:`Вставь пропущенное число: ${d} дм ${c} см = ... см`,answer:d*10+c,explain:`1 дм = 10 см, значит ${d}·10 + ${c} = ${d*10+c}`});})();
+    (()=>{const a=rand(2,4),b=rand(5,7),c=rand(b,b+2);const L=a*b+a,R=a*c;pool.push({type:'choice',emoji:'⚖️',topic:'Сравнение выражений',q:`Сравни выражения: ${a} · ${b} + ${a}  и  ${a} · ${c}`,choices:['>','<','='],answer:L>R?'>':L<R?'<':'='});})();
+    (()=>{const A=rand(20,50),B=rand(3,10);pool.push({type:'input',mode:'number',emoji:'🌷',topic:'Задача в два действия',q:`В саду посадили ${A} гвоздик, а астр на ${B} меньше. Сколько всего цветов посадили?`,answer:A+(A-B),explain:`Астр: ${A}−${B}=${A-B}. Всего: ${A}+${A-B}=${A+(A-B)}`});})();
+    return pool;
+  },
+  3: () => {
+    const pool=[];
+    (()=>{const a=rand(120,540),b=rand(130,450);pool.push({type:'input',mode:'number',emoji:'➕',topic:'Сложение трёхзначных чисел',q:`Вычисли (столбиком): ${a} + ${b}`,answer:a+b});})();
+    (()=>{const a=rand(400,900),b=rand(120,380);pool.push({type:'input',mode:'number',emoji:'➖',topic:'Вычитание трёхзначных чисел',q:`Вычисли (столбиком): ${a} − ${b}`,answer:a-b});})();
+    (()=>{const a=rand(112,289),b=rand(2,4);pool.push({type:'input',mode:'number',emoji:'✖️',topic:'Умножение на однозначное число',q:`Вычисли (столбиком): ${a} · ${b}`,answer:a*b});})();
+    (()=>{const b=rand(2,6),q=rand(60,180),a=b*q;pool.push({type:'input',mode:'number',emoji:'➗',topic:'Деление на однозначное число',q:`Вычисли (столбиком): ${a} : ${b}`,answer:q});})();
+    (()=>{const c=rand(2,6),sum=c*rand(2,6),a=rand(1,sum-1),b=sum-a,d=rand(2,9),e=rand(2,9);pool.push({type:'input',mode:'number',emoji:'🧮',topic:'Порядок действий',q:`Найди значение выражения: (${a} + ${b}) : ${c} + ${d} · ${e}`,answer:sum/c+d*e,explain:`(${a}+${b}):${c}=${sum/c}, ${d}·${e}=${d*e}, сумма ${sum/c+d*e}`});})();
+    (()=>{const k=rand(2,7),X=rand(50,150),P=k*X;pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: ${k} · X = ${P}. Чему равен X?`,answer:X,explain:`X = ${P} : ${k} = ${X}`});})();
+    (()=>{const a=rand(20,60),m=rand(120,260);pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: X + ${a} = ${m}. Чему равен X?`,answer:m-a,explain:`X = ${m} − ${a} = ${m-a}`});})();
+    (()=>{const a=rand(3,9),b=rand(4,12);pool.push({type:'input',mode:'number',emoji:'⬛',topic:'Периметр прямоугольника',q:`Найди периметр прямоугольника со сторонами ${a} см и ${b} см.`,answer:2*(a+b),explain:`(${a}+${b})·2 = ${2*(a+b)} см`});})();
+    (()=>{const a=rand(3,9),b=rand(4,12);pool.push({type:'input',mode:'number',emoji:'🟨',topic:'Площадь прямоугольника',q:`Найди площадь прямоугольника со сторонами ${a} см и ${b} см.`,answer:a*b,explain:`${a}·${b} = ${a*b} см²`});})();
+    (()=>{const h=rand(1,9),d=rand(0,9),e=rand(0,9);pool.push({type:'input',mode:'number',emoji:'🔢',topic:'Разрядный состав числа',q:`Запиши число: ${h} сот. ${d} дес. ${e} ед.`,answer:h*100+d*10+e,explain:`${h}·100 + ${d}·10 + ${e} = ${h*100+d*10+e}`});})();
+    (()=>{const n=rand(2,9)*100+rand(0,9)*10+rand(0,9);pool.push({type:'input',mode:'number',emoji:'💯',topic:'Разрядный состав числа',q:`Сколько всего сотен в числе ${n}? (цифра разряда сотен)`,answer:Math.floor(n/100),explain:`В разряде сотен стоит цифра ${Math.floor(n/100)}`});})();
+    return pool;
+  },
+  4: () => {
+    const pool=[];
+    (()=>{const a=rand(120000,650000),b=rand(40000,300000);pool.push({type:'input',mode:'number',emoji:'➕',topic:'Сложение многозначных чисел',q:`Вычисли: ${a} + ${b}`,answer:a+b});})();
+    (()=>{const a=rand(300000,900000),b=rand(20000,120000);pool.push({type:'input',mode:'number',emoji:'➖',topic:'Вычитание многозначных чисел',q:`Вычисли: ${a} − ${b}`,answer:a-b});})();
+    (()=>{const a=rand(1200,5200),b=rand(12,39);pool.push({type:'input',mode:'number',emoji:'✖️',topic:'Умножение на двузначное число',q:`Вычисли: ${a} · ${b}`,answer:a*b});})();
+    (()=>{const b=rand(12,64),q=rand(120,420),a=b*q;pool.push({type:'input',mode:'number',emoji:'➗',topic:'Деление на двузначное число',q:`Вычисли: ${a} : ${b}`,answer:q});})();
+    (()=>{const pairs=[['26 м',2600,'260 дм',2600],['121 мин',121,'2 ч',120],['9 т 516 кг',9516,'9156 кг',9156],['3 км',3000,'2999 м',2999],['5 ч',300,'300 мин',300],['1 т',1000,'999 кг',999]];
+      const p=pick(pairs);pool.push({type:'choice',emoji:'⚖️',topic:'Сравнение величин',q:`Сравни: ${p[0]} и ${p[2]}. Поставь знак.`,choices:['>','<','='],answer:p[1]>p[3]?'>':p[1]<p[3]?'<':'='});})();
+    (()=>{const a=rand(6,18),b=rand(5,20);pool.push({type:'input',mode:'number',emoji:'🟨',topic:'Площадь прямоугольника',q:`Найди площадь прямоугольника со сторонами ${a} см и ${b} см.`,answer:a*b,explain:`${a}·${b} = ${a*b} см²`});})();
+    (()=>{const a=rand(6,18),b=rand(5,20);pool.push({type:'input',mode:'number',emoji:'⬛',topic:'Периметр прямоугольника',q:`Найди периметр прямоугольника со сторонами ${a} см и ${b} см.`,answer:2*(a+b),explain:`(${a}+${b})·2 = ${2*(a+b)} см`});})();
+    (()=>{const a=rand(300,700),c=rand(3,6),q=rand(120,260),b=c*q;pool.push({type:'input',mode:'number',emoji:'🔤',topic:'Уравнения',q:`Реши уравнение: X − ${a} = ${b} : ${c}. Чему равен X?`,answer:a+q,explain:`${b}:${c}=${q}, значит X = ${q} + ${a} = ${a+q}`});})();
+    (()=>{const per=rand(2,5),n1=rand(300,500),n2=rand(300,500),total=per*(n1+n2);pool.push({type:'input',mode:'number',emoji:'🧈',topic:'Текстовая задача',q:`В два магазина привезли ${total} кг масла в одинаковых коробках. В первый магазин — ${n1} коробок, во второй — ${n2}. Сколько килограммов масла привезли в первый магазин?`,answer:per*n1,explain:`В коробке: ${total}:${n1+n2}=${per} кг. В первый: ${per}·${n1}=${per*n1} кг`});})();
+    return pool;
+  },
+  vpr4: () => {
+    const pad=n=>String(n).padStart(2,'0');
+    const tasks=[];
+    (()=>{const a=rand(23,49),b=rand(2,3);tasks.push({type:'input',mode:'number',emoji:'✖️',topic:'Умножение',q:`Задание 1. Вычисли: ${a} · ${b}`,answer:a*b});})();
+    (()=>{const c=rand(3,6),x=rand(16,30),y=rand(5,14),e=rand(2,9);tasks.push({type:'input',mode:'number',emoji:'🧮',topic:'Порядок действий',q:`Задание 2. Вычисли: ${c} · (${x} − ${y}) + ${e}`,answer:c*(x-y)+e,explain:`Скобки: ${x}−${y}=${x-y}; ${c}·${x-y}=${c*(x-y)}; +${e}=${c*(x-y)+e}`});})();
+    (()=>{const pen=rand(20,40),pcl=rand(8,18);tasks.push({type:'input',mode:'number',emoji:'🛒',topic:'Задача на стоимость',q:`Задание 3. Ручка стоит ${pen} руб., а карандаш — ${pcl} руб. Сколько рублей нужно заплатить за одну ручку и четыре карандаша?`,answer:pen+4*pcl,explain:`4 карандаша: ${pcl}·4=${4*pcl}; с ручкой: ${4*pcl}+${pen}=${pen+4*pcl} руб.`});})();
+    (()=>{const h1=12,m1=rand(30,55),dur=rand(60,110),tot=h1*60+m1+dur,h2=Math.floor(tot/60),m2=tot%60;tasks.push({type:'input',mode:'number',emoji:'⏱️',topic:'Задача на время',q:`Задание 4. Матч начался в ${h1}:${pad(m1)} и закончился в ${h2}:${pad(m2)}. Сколько минут он продолжался?`,answer:dur,explain:`От ${h1}:${pad(m1)} до ${h2}:${pad(m2)} — это ${dur} мин`});})();
+    (()=>{const a=rand(3,7),b=rand(4,9);tasks.push({type:'input',mode:'number',emoji:'▦',topic:'Периметр фигуры',q:`Задание 5. На клетчатом поле (сторона клетки 1 см) нарисован прямоугольник. Найди его периметр (в см).`,answer:2*(a+b),svg:rectFigure(a,b),explain:`Сосчитай клетки: стороны ${Math.max(a,b)} см и ${Math.min(a,b)} см. Периметр = (${Math.max(a,b)} + ${Math.min(a,b)}) · 2 = ${2*(a+b)} см`});})();
+    (()=>{const cls=['6-й класс','7-й класс','8-й класс'];const rows=cls.map(c=>[c,rand(2,9),rand(2,9),rand(2,9),rand(2,12)]);const totalFut=rows.reduce((s,r)=>s+r[4],0);tasks.push({type:'input',mode:'number',emoji:'📊',topic:'Работа с таблицей',q:`Задание 6. Среди школьников провели опрос «Твой любимый вид спорта». Результаты опроса показаны в таблице. Сколько всего школьников выбрали футбол?`,svg:sportsTable(rows),answer:totalFut,explain:`Сложи числа в столбце «Футбол»: ${rows.map(r=>r[4]).join(' + ')} = ${totalFut}`});})();
+    (()=>{const a=rand(20,49),b=rand(6,9),d=rand(2,6),q=rand(40,120),c=d*q;const val=a*b-q;if(val>0)tasks.push({type:'input',mode:'number',emoji:'🔢',topic:'Порядок действий (× и :)',q:`Задание 7. Найди значение выражения: ${a} · ${b} − ${c} : ${d}`,answer:val,explain:`${a}·${b}=${a*b}; ${c}:${d}=${q}; ${a*b}−${q}=${val}`});else tasks.push({type:'input',mode:'number',emoji:'🔢',topic:'Порядок действий (× и :)',q:`Задание 7. Найди значение выражения: 44 · 7 − 648 : 3`,answer:92,explain:`44·7=308; 648:3=216; 308−216=92`});})();
+    (()=>{const N=pick([5,9]);const rem=N*1000-1800;tasks.push({type:'input',mode:'number',emoji:'🥒',topic:'Задача на массу',q:`Задание 8. В магазин привезли ${N} кг огурцов. Их разложили в упаковки по 600 г и по 800 г. Упаковок по 600 г получилось три. Сколько получилось упаковок по 800 г?`,answer:rem/800,explain:`${N} кг = ${N*1000} г; по 600 г: 3·600=1800 г; осталось ${rem} г; ${rem}:800=${rem/800}`});})();
+    (()=>{const v=pick([[6,5,9,5],[8,6,10,6],[10,4,6,4]]);tasks.push({type:'input',mode:'number',emoji:'🍬',topic:'Логическая задача',q:`Задание 9. У Кирилла ${v[0]} мятных, ${v[1]} лимонных и ${v[2]} клубничных конфет. Он раскладывает все конфеты в пакетики так, чтобы в каждом были конфеты всех трёх видов и во всех пакетиках было поровну конфет. Какое наибольшее число пакетиков он сможет собрать?`,answer:v[3],explain:`Пакетиков не больше, чем самых редких конфет, и число делит общее количество. Ответ: ${v[3]}`});})();
+    (()=>{const words=['ОПЛАЧЕНО','ПОБЕДА','ШКОЛА','ЗАДАЧА','ОТЛИЧНО','МАТЕМАТИКА','ПЯТЁРКА'];const w=pick(words);tasks.push({type:'input',mode:'text',emoji:'🔁',topic:'Зеркальное отражение',q:`Задание 10. На штампе слово вырезано зеркально. Какое слово отпечатается на бумаге? Запиши его.`,svg:stampFigure(w),answer:w,explain:`На штампе буквы отражены слева направо. Правильно читается: «${w}»`});})();
+    (()=>{const v=pick([[14,4],[12,2]]);tasks.push({type:'input',mode:'number',emoji:'✏️',topic:'Логическая задача',q:`Задание 11. В коробке лежат синие, красные и зелёные карандаши — всего ${v[0]} штук. Синих в 4 раза больше, чем зелёных, а красных меньше, чем синих. Сколько в коробке красных карандашей?`,answer:v[1],explain:`Подбором: зелёных 2, синих 8, тогда красных ${v[1]} (меньше, чем синих)`});})();
+    return tasks;
+  }
+};
+
+/* -------- РУССКИЙ ЯЗЫК -------- */
+const RUS = {
+  1: () => [
+    {type:'input',mode:'number',emoji:'🔤',topic:'Гласные и согласные',q:"Сколько гласных букв в слове «кошка»?",answer:2,explain:'Гласные: о, а'},
+    {type:'input',mode:'number',emoji:'🐘',topic:'Слоги',q:"Сколько слогов в слове «машина»?",answer:3,explain:'ма-ши-на'},
+    {type:'choice',emoji:'🦒',topic:'Орфограммы (жи-ши, ча-ща)',q:"Как правильно написать слово?",choices:['жираф','жыраф'],answer:'жираф',explain:'ЖИ пиши с буквой И'},
+    {type:'choice',emoji:'🐟',topic:'Орфограммы (жи-ши, ча-ща)',q:"Вставь букву: рыба живёт в реке — «ры__а»? ЖИ-ШИ пиши с буквой…",choices:['И','Ы'],answer:'И',explain:'ЖИ-ШИ пиши с буквой И'},
+    {type:'choice',emoji:'👧',topic:'Заглавная буква',q:"С какой буквы пишем имя «Аня»?",choices:['С большой','С маленькой'],answer:'С большой',explain:'Имена пишем с заглавной буквы'},
+    {type:'choice',emoji:'🔊',topic:'Звуки (гласные/согласные)',q:"Звук [м] — какой?",choices:['Гласный','Согласный'],answer:'Согласный'},
+    {type:'choice',emoji:'🔊',topic:'Звуки (гласные/согласные)',q:"Звук [а] — какой?",choices:['Гласный','Согласный'],answer:'Гласный'},
+    {type:'input',mode:'number',emoji:'🏠',topic:'Количество букв',q:"Сколько букв в слове «дом»?",answer:3},
+    {type:'choice',emoji:'🐈',topic:'Слоги',q:"Сколько слогов в слове «кот»?",choices:['1','2','3'],answer:'1',explain:'В слове столько слогов, сколько гласных'},
+    {type:'input',mode:'number',emoji:'🐠',topic:'Слоги',q:"Сколько слогов в слове «рыба»?",answer:2,explain:'ры-ба'},
+    {type:'choice',emoji:'📣',topic:'Ударение',q:"Где ударение стоит верно?",choices:['совА','сОва'],answer:'совА',explain:'Правильно: совА'},
+  ],
+  2: () => [
+    {type:'choice',emoji:'🏃',topic:'Части речи',q:"«бежит» — какая часть речи?",choices:['Глагол','Существительное','Прилагательное'],answer:'Глагол',explain:'Отвечает на вопрос «что делает?»'},
+    {type:'choice',emoji:'🌸',topic:'Части речи',q:"«красивый» — какая часть речи?",choices:['Прилагательное','Глагол','Существительное'],answer:'Прилагательное',explain:'Отвечает на вопрос «какой?»'},
+    {type:'choice',emoji:'🐕',topic:'Части речи',q:"«собака» — какая часть речи?",choices:['Существительное','Глагол','Прилагательное'],answer:'Существительное',explain:'Отвечает на вопрос «кто?»'},
+    {type:'choice',emoji:'💧',topic:'Безударные гласные',q:"Какую букву писать в слове «в_да»? Проверь ударением.",choices:['о (вОды)','а (вАды)'],answer:'о (вОды)',explain:'Проверочное слово вОды — пишем о'},
+    {type:'choice',emoji:'🍄',topic:'Парные согласные',q:"Какая буква на конце слова «гри_»? Проверь: грибы →",choices:['б','п'],answer:'б',explain:'Грибы — значит гриБ'},
+    {type:'choice',emoji:'✂️',topic:'Разделительный мягкий знак',q:"Нужен ли разделительный Ь в слове «солов_и»?",choices:['Да, соловьи','Нет, солови'],answer:'Да, соловьи'},
+    {type:'choice',emoji:'📛',topic:'Заглавная буква',q:"Как пишем название реки «Волга»?",choices:['С большой буквы','С маленькой буквы'],answer:'С большой буквы'},
+    {type:'choice',emoji:'🍯',topic:'Части речи',q:"«сладкий» — какая часть речи?",choices:['Прилагательное','Глагол'],answer:'Прилагательное'},
+    {type:'choice',emoji:'📖',topic:'Части речи',q:"«читать» — какая часть речи?",choices:['Глагол','Существительное'],answer:'Глагол'},
+  ],
+  3: () => [
+    {type:'choice',emoji:'🌲',topic:'Состав слова (корень)',q:"Найди корень в слове «лесник».",choices:['лес','ник','лесн'],answer:'лес',explain:'Однокоренные: лес, лесной, лесник'},
+    {type:'choice',emoji:'🚗',topic:'Состав слова (приставка)',q:"Найди приставку в слове «приехал».",choices:['при','ехал','по'],answer:'при'},
+    {type:'choice',emoji:'🏠',topic:'Состав слова (суффикс)',q:"Найди суффикс в слове «домик».",choices:['ик','дом','ок'],answer:'ик',explain:'Суффикс -ик- образует уменьшительное слово'},
+    {type:'choice',emoji:'📚',topic:'Состав слова (окончание)',q:"Найди окончание в слове «столы».",choices:['ы','стол','лы'],answer:'ы'},
+    {type:'choice',emoji:'💧',topic:'Однокоренные слова',q:"Какое слово однокоренное к слову «вода»?",choices:['водный','водитель','провод'],answer:'водный',explain:'Общий смысл и корень -вод- (вода)'},
+    {type:'choice',emoji:'❓',topic:'Части речи',q:"«книга» — какая часть речи?",choices:['Существительное','Прилагательное','Глагол'],answer:'Существительное'},
+    {type:'choice',emoji:'🌟',topic:'Состав слова (корень)',q:"Сколько букв в корне слова «звёздочка» (корень «звёзд»)?",choices:['5','4','6'],answer:'5'},
+    {type:'choice',emoji:'🍎',topic:'Состав слова (приставка)',q:"Найди приставку в слове «переход».",choices:['пере','ход','пе'],answer:'пере'},
+    {type:'choice',emoji:'🐈',topic:'Однокоренные слова',q:"Какое слово НЕ однокоренное к слову «кот»?",choices:['котик','котёнок','каток'],answer:'каток',explain:'«Каток» — другой смысл, это не про кота'},
+  ],
+  4: () => [
+    {type:'choice',emoji:'✍️',topic:'Спряжение глаголов',q:"«пишет» — какое спряжение глагола?",choices:['I спряжение','II спряжение'],answer:'I спряжение',explain:'Писать — на -ать, I спряжение'},
+    {type:'choice',emoji:'🗣️',topic:'Спряжение глаголов',q:"«говорит» — какое спряжение глагола?",choices:['II спряжение','I спряжение'],answer:'II спряжение',explain:'Говорить — на -ить, II спряжение'},
+    {type:'choice',emoji:'🌍',topic:'Склонение существительных',q:"«земля» — какое склонение?",choices:['1-е склонение','2-е склонение','3-е склонение'],answer:'1-е склонение',explain:'Ж.р. с окончанием -я — 1-е склонение'},
+    {type:'choice',emoji:'🪑',topic:'Падежи',q:"«на столе» — какой падеж?",choices:['Предложный','Именительный','Винительный'],answer:'Предложный',explain:'Отвечает на вопрос «на чём?»'},
+    {type:'choice',emoji:'🎁',topic:'Падежи',q:"«подарил другу» — какой падеж у слова «другу»?",choices:['Дательный','Родительный'],answer:'Дательный',explain:'Отвечает на вопрос «кому?»'},
+    {type:'choice',emoji:'🏆',topic:'Спряжение глаголов',q:"«читаю» — какое спряжение глагола?",choices:['I спряжение','II спряжение'],answer:'I спряжение'},
+    {type:'choice',emoji:'🌙',topic:'Склонение существительных',q:"«ночь» — какое склонение?",choices:['3-е склонение','1-е склонение'],answer:'3-е склонение',explain:'Ж.р. с мягким знаком на конце — 3-е склонение'},
+    {type:'choice',emoji:'📗',topic:'Падежи',q:"«книгой» — какой падеж?",choices:['Творительный','Дательный'],answer:'Творительный',explain:'Отвечает на вопрос «чем?»'},
+    {type:'choice',emoji:'🚀',topic:'Фонетика (буквы и звуки)',q:"Сколько букв «о» в слове «молоко»?",choices:['3','2','1'],answer:'3'},
+  ],
+  vpr4: () => [
+    {type:'choice',emoji:'📣',topic:'Ударение',q:"В каком варианте ударение поставлено верно?",choices:['позвонИт','позвОнит'],answer:'позвонИт',explain:'Правильно: позвонИт'},
+    {type:'choice',emoji:'📣',topic:'Ударение',q:"В каком варианте ударение поставлено верно?",choices:['тОрты','тортЫ'],answer:'тОрты',explain:'Правильно: тОрты'},
+    {type:'choice',emoji:'📣',topic:'Ударение',q:"В каком варианте ударение поставлено верно?",choices:['красИвее','красивЕе'],answer:'красИвее',explain:'Правильно: красИвее'},
+    {type:'choice',emoji:'📣',topic:'Ударение',q:"В каком варианте ударение поставлено верно?",choices:['киломЕтр','килОметр'],answer:'киломЕтр',explain:'Правильно: киломЕтр'},
+    {type:'choice',emoji:'🔊',topic:'Фонетика (буквы и звуки)',q:"Сколько звуков в слове «яма»?",choices:['3','4','5'],answer:'4',explain:'Буква «я» в начале слова даёт два звука: [й][а]. Всего [й][а][м][а] — 4 звука'},
+    {type:'choice',emoji:'🔊',topic:'Фонетика (буквы и звуки)',q:"Сколько звуков в слове «коньки»?",choices:['5','6','7'],answer:'5',explain:"Мягкий знак звука не обозначает: [к][о][н'][к'][и] — 5 звуков, но 6 букв"},
+    {type:'choice',emoji:'🧩',topic:'Состав слова',q:"Найди приставку в слове «приморский».",choices:['при','мор','ский'],answer:'при'},
+    {type:'choice',emoji:'🧩',topic:'Состав слова',q:"Найди окончание в слове «зелёные».",choices:['ые','е','зелён'],answer:'ые'},
+    {type:'choice',emoji:'📚',topic:'Склонение существительных',q:"Определи склонение существительного «степь».",choices:['1-е склонение','2-е склонение','3-е склонение'],answer:'3-е склонение',explain:'Ж.р. с мягким знаком на конце — 3-е склонение'},
+    {type:'choice',emoji:'🧭',topic:'Падежи',q:"Определи падеж существительного в словосочетании «иду по дороге».",choices:['Дательный','Родительный','Предложный'],answer:'Дательный',explain:'По чему? — по дорогЕ, это дательный падеж'},
+    {type:'choice',emoji:'🏃',topic:'Части речи',q:"Определи часть речи слова «быстро».",choices:['Наречие','Прилагательное','Глагол'],answer:'Наречие',explain:'Отвечает на вопрос «как?» — это наречие'},
+    {type:'choice',emoji:'🔁',topic:'Синонимы',q:"Подбери синоним к слову «известный».",choices:['знаменитый','маленький','быстрый'],answer:'знаменитый',explain:'Известный = знаменитый, прославленный'},
+  ]
+};
+
+const SUBJECT_NAME={math:'Математика',rus:'Русский язык'};
+const PRAISE=['Верно! 🎉','Молодец! ⭐','Правильно! 👍','Супер! 🌟','Отлично! 🥳'];
+
+/* ================= СОСТОЯНИЕ ================= */
+let state={subject:null,grade:null,tasks:[],idx:0,score:0,answered:false,muted:false,log:[]};
+
+const $=id=>document.getElementById(id);
+
+/* выбор предмета */
+document.querySelectorAll('#subjects .choice-tile').forEach(b=>{
+    b.onclick=()=>{document.querySelectorAll('#subjects .choice-tile').forEach(x=>x.classList.remove('selected'));
+        b.classList.add('selected');state.subject=b.dataset.subject;checkReady();};
+});
+document.querySelectorAll('#grades .choice-tile').forEach(b=>{
+    b.onclick=()=>{document.querySelectorAll('#grades .choice-tile').forEach(x=>x.classList.remove('selected'));
+        b.classList.add('selected');state.grade=b.dataset.grade;checkReady();};
+});
+function checkReady(){$('btn-start').disabled=!(state.subject&&state.grade);}
+
+$('btn-start').onclick=startQuiz;
+$('btn-again').onclick=startQuiz;
+$('btn-choose').onclick=goSelect;
+$('btn-save').onclick=saveSummary;
+$('quit').onclick=e=>{e.preventDefault();goSelect();};
+$('btn-next').onclick=nextTask;
+$('btn-prev').onclick=prevTask;
+$('mute').onclick=()=>{state.muted=!state.muted;$('mute').textContent=state.muted?'🔇':'🔊';};
+
+function goSelect(){
+    $('screen-quiz').classList.add('hidden');
+    $('screen-result').classList.add('hidden');
+    $('screen-select').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startQuiz(){
+    const bank=(state.subject==='math'?MATH:RUS)[state.grade]();
+    if(state.grade==='vpr4'){
+        state.tasks = state.subject==='math' ? bank.slice(0,11) : shuffle(bank).slice(0,11);
+    }else{
+        state.tasks = shuffle(bank).slice(0,6);
+    }
+    state.idx=0;state.results=[];
+    $('quiz-label').textContent=`${SUBJECT_NAME[state.subject]} · ${gradeLabel()}`;
+    $('screen-select').classList.add('hidden');
+    $('screen-result').classList.add('hidden');
+    $('screen-quiz').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+    renderTask();
+}
+
+function scoreCount(){return state.results.filter(r=>r&&r.ok).length;}
+
+function renderTask(){
+    const t=state.tasks[state.idx];
+    const total=state.tasks.length;
+    const res=state.results[state.idx];      // уже отвечено?
+    state.answered=!!res;
+    $('progress-bar').style.width=(state.idx/total*100)+'%';
+    $('q-counter').textContent=`Задание ${state.idx+1} из ${total}`;
+    $('quiz-score').textContent='⭐ '+scoreCount();
+    $('q-emoji').textContent=t.emoji||'';
+    $('q-visual').textContent=t.visual||'';
+    $('q-figure').innerHTML=t.svg||'';
+    $('q-text').textContent=t.q;
+    $('feedback').textContent='';$('feedback').className='feedback';
+    $('explain').textContent='';
+    // кнопки навигации
+    $('btn-prev').classList.toggle('hidden',state.idx===0);
+    $('btn-next').textContent=state.idx===total-1?'Показать результат 🏁':'Дальше →';
+    $('btn-next').classList.toggle('hidden',!res); // «Дальше» доступно, только если задание уже отвечено
+
+    const area=$('answer-area');area.innerHTML='';
+    if(t.type==='choice'){
+        const wrap=document.createElement('div');wrap.className='options';
+        (res?t.choices:shuffle(t.choices)).forEach(c=>{
+            const btn=document.createElement('button');btn.className='opt';btn.textContent=c;
+            if(res){
+                btn.disabled=true;
+                if(eqChoice(c,t.answer))btn.classList.add('correct');
+                else if(eqChoice(c,res.given))btn.classList.add('wrong');
+            }else{
+                btn.onclick=()=>checkChoice(btn,c,t);
+            }
+            wrap.appendChild(btn);
+        });
+        area.appendChild(wrap);
+    }else{
+        const row=document.createElement('div');row.className='input-row';
+        const inp=document.createElement('input');inp.className='answer-input';
+        inp.type=t.mode==='number'?'number':'text';
+        inp.inputMode=t.mode==='number'?'numeric':'text';
+        inp.placeholder='Ответ';inp.id='the-input';
+        if(res){
+            inp.value=res.given;inp.disabled=true;
+            row.appendChild(inp);
+        }else{
+            const btn=document.createElement('button');btn.className='btn-check';btn.textContent='Проверить';
+            btn.onclick=()=>checkInput(inp,btn,t);
+            inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!state.answered)btn.click();});
+            row.appendChild(inp);row.appendChild(btn);
+            setTimeout(()=>inp.focus(),50);
+        }
+        area.appendChild(row);
+    }
+    if(res)showReview(res,t); // показать разбор для уже отвеченного задания
+}
+
+// разбор ранее отвеченного задания (без звука/конфетти)
+function showReview(res,t){
+    const fb=$('feedback');
+    if(res.ok){fb.textContent='Верно ✅';fb.className='feedback ok';}
+    else{fb.textContent='Твой ответ: '+(res.given===''?'—':res.given)+'  ·  Правильный ответ: '+res.correct;fb.className='feedback no';}
+    if(t.explain)$('explain').textContent='💡 '+t.explain;
+}
+
+function norm(s){return String(s).trim().toLowerCase().replace(/ё/g,'е').replace(/\s+/g,' ');}
+function eqChoice(a,b){return String(a).trim().replace(/ё/g,'е').replace(/\s+/g,' ')===String(b).trim().replace(/ё/g,'е').replace(/\s+/g,' ');}
+function gradeLabel(){return state.grade==='vpr4'?'ВПР · 4 класс':state.grade+' класс';}
+function isCorrect(t,val){
+    if(t.mode==='number') return Number(val)===Number(t.answer);
+    const ans=Array.isArray(t.answer)?t.answer:[t.answer];
+    return ans.some(a=>norm(a)===norm(val));
+}
+
+function checkChoice(btn,choice,t){
+    if(state.answered)return;state.answered=true;
+    const ok=eqChoice(choice,t.answer);
+    document.querySelectorAll('.opt').forEach(b=>{
+        b.disabled=true;
+        if(eqChoice(b.textContent,t.answer))b.classList.add('correct');
+    });
+    if(!ok)btn.classList.add('wrong');
+    finishAnswer(ok,t,choice);
+}
+function checkInput(inp,btn,t){
+    if(state.answered)return;
+    if(inp.value.trim()==='')return;
+    const given=inp.value.trim();
+    state.answered=true;inp.disabled=true;btn.disabled=true;
+    finishAnswer(isCorrect(t,inp.value),t,given);
+}
+
+function finishAnswer(ok,t,given){
+    state.results[state.idx]={n:state.idx+1,topic:t.topic||'—',q:t.q,given:(given===undefined?'':given),
+        correct:(Array.isArray(t.answer)?t.answer[0]:t.answer),ok:ok};
+    const fb=$('feedback');
+    if(ok){fb.textContent=pick(PRAISE);fb.className='feedback ok pop';beep(true);}
+    else{fb.textContent='Не угадал 🙈 Правильный ответ: '+ (Array.isArray(t.answer)?t.answer[0]:t.answer);
+        fb.className='feedback no';beep(false);}
+    if(t.explain)$('explain').textContent='💡 '+t.explain;
+    $('quiz-score').textContent='⭐ '+scoreCount();
+    $('btn-next').classList.remove('hidden');
+    $('btn-next').focus();
+}
+
+function nextTask(){
+    if(!state.results[state.idx])return; // нельзя пропустить неотвеченное
+    state.idx++;
+    if(state.idx>=state.tasks.length){showResult();return;}
+    renderTask();
+}
+function prevTask(){
+    if(state.idx>0){state.idx--;renderTask();window.scrollTo({top:0,behavior:'smooth'});}
+}
+
+function showResult(){
+    $('progress-bar').style.width='100%';
+    $('screen-quiz').classList.add('hidden');
+    $('screen-result').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+    const total=state.tasks.length,sc=scoreCount(),pct=sc/total;
+    let stars,title;
+    if(pct>=0.9){stars='🌟🌟🌟';title='Ты чемпион! 🏆';}
+    else if(pct>=0.6){stars='🌟🌟';title='Отлично получается! 🎉';}
+    else{stars='🌟';title='Молодец, тренируйся ещё! 💪';}
+    $('result-stars').textContent=stars;
+    $('result-title').textContent=title;
+    $('result-score').textContent=`Правильных ответов: ${sc} из ${total}`;
+    if(pct>=0.6)confetti();
+}
+
+/* ================= СВОДКА ДЛЯ УЧИТЕЛЯ (картинка) ================= */
+function rr(ctx,x,y,w,h,r){ctx.beginPath();
+    if(ctx.roundRect){ctx.roundRect(x,y,w,h,r);}
+    else{ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}}
+function wrapText(ctx,text,maxW){
+    const words=String(text).split(/\s+/);const lines=[];let line='';
+    for(const w of words){const test=line?line+' '+w:w;
+        if(ctx.measureText(test).width>maxW&&line){lines.push(line);line=w;}else line=test;}
+    if(line)lines.push(line);return lines;}
+
+function drawReport(ctx,W){
+    const P=32, innerW=W-2*P, F='Poppins,system-ui,sans-serif';
+    ctx.fillStyle='#f9f7f0';ctx.fillRect(0,0,W,ctx.canvas.height);
+    ctx.textBaseline='alphabetic';ctx.textAlign='left';
+    // шапка
+    ctx.fillStyle='#1e40af';ctx.fillRect(0,0,W,92);
+    ctx.fillStyle='#facc15';ctx.font='700 28px '+F;ctx.fillText('Весёлая Школа',P,42);
+    ctx.fillStyle='#ffffff';ctx.font='600 19px '+F;ctx.fillText('Сводка по заданиям',P,70);
+    let y=92+34;
+    // предмет · класс · дата
+    ctx.fillStyle='#1e40af';ctx.font='700 20px '+F;
+    ctx.fillText(SUBJECT_NAME[state.subject]+' · '+gradeLabel(),P,y);
+    ctx.fillStyle='#6b7280';ctx.font='400 15px '+F;ctx.textAlign='right';
+    ctx.fillText(new Date().toLocaleDateString('ru-RU'),W-P,y);ctx.textAlign='left';
+    y+=26;
+    const nm=((document.getElementById('student-name')||{}).value||'').trim();
+    if(nm){ctx.fillStyle='#333333';ctx.font='600 16px '+F;ctx.fillText('Ученик: '+nm,P,y);y+=24;}else y+=2;
+    // результат
+    const LOG=state.results.filter(Boolean);
+    const total=LOG.length, sc=LOG.filter(x=>x.ok).length;
+    ctx.fillStyle='#111827';ctx.font='700 22px '+F;
+    ctx.fillText('Результат: '+sc+' из '+total+' верно',P,y);y+=30;
+    // темы для повторения
+    const wrongTopics=[...new Set(LOG.filter(x=>!x.ok).map(x=>x.topic))];
+    if(wrongTopics.length){
+        const items=wrongTopics.map(t=>'•  '+t);
+        const boxH=30+items.length*24+14;
+        rr(ctx,P,y,innerW,boxH,14);ctx.fillStyle='#fef2f2';ctx.fill();
+        rr(ctx,P,y,innerW,boxH,14);ctx.lineWidth=2;ctx.strokeStyle='#f87171';ctx.stroke();
+        let yy=y+28;ctx.fillStyle='#b91c1c';ctx.font='700 17px '+F;
+        ctx.fillText('Темы, которые стоит повторить:',P+16,yy);yy+=26;
+        ctx.fillStyle='#7f1d1d';ctx.font='400 16px '+F;
+        for(const it of items){ctx.fillText(it,P+16,yy);yy+=24;}
+        y+=boxH+18;
+    }else{
+        const boxH=52;rr(ctx,P,y,innerW,boxH,14);ctx.fillStyle='#f0fdf4';ctx.fill();
+        rr(ctx,P,y,innerW,boxH,14);ctx.lineWidth=2;ctx.strokeStyle='#22c55e';ctx.stroke();
+        ctx.fillStyle='#166534';ctx.font='700 17px '+F;ctx.fillText('Ошибок нет — отличная работа!',P+16,y+32);
+        y+=boxH+18;
+    }
+    // разбор заданий
+    ctx.fillStyle='#1e40af';ctx.font='700 18px '+F;ctx.fillText('Разбор заданий',P,y);y+=16;
+    for(const it of LOG){
+        ctx.font='400 16px '+F;
+        const qLines=wrapText(ctx,it.q,innerW-32);
+        const L=qLines.length;
+        const cardH=24+8+22*L+24+(it.ok?0:24)+16;
+        rr(ctx,P,y,innerW,cardH,12);ctx.fillStyle='#ffffff';ctx.fill();
+        rr(ctx,P,y,innerW,cardH,12);ctx.lineWidth=1;ctx.strokeStyle='#e5e7eb';ctx.stroke();
+        rr(ctx,P,y,6,cardH,6);ctx.fillStyle=it.ok?'#22c55e':'#ef4444';ctx.fill();
+        let yy=y+24;
+        ctx.fillStyle=it.ok?'#166534':'#b91c1c';ctx.font='700 15px '+F;
+        ctx.fillText((it.ok?'✓':'✗')+'  №'+it.n+' · '+it.topic,P+16,yy);
+        ctx.fillStyle='#111827';ctx.font='400 16px '+F;yy+=8;
+        for(const ln of qLines){yy+=22;ctx.fillText(ln,P+16,yy);}
+        yy+=24;ctx.font='600 16px '+F;ctx.fillStyle=it.ok?'#166534':'#b91c1c';
+        ctx.fillText('Ответ ученика: '+(it.given===''?'—':it.given),P+16,yy);
+        if(!it.ok){yy+=24;ctx.fillStyle='#166534';ctx.fillText('Правильный ответ: '+it.correct,P+16,yy);}
+        y+=cardH+12;
+    }
+    // подсказка учителю
+    y+=6;ctx.fillStyle='#6b7280';ctx.font='400 14px '+F;
+    for(const ln of wrapText(ctx,'Подсказка: единичная ошибка в теме — скорее невнимательность; если тема встречается в ошибках несколько раз, её стоит проработать.',innerW)){ctx.fillText(ln,P,y);y+=20;}
+    y+=10;ctx.fillStyle='#1e40af';ctx.font='600 14px '+F;ctx.fillText('funny-school.ru',P,y);y+=P;
+    return Math.ceil(y);
+}
+
+async function makeSummaryBlob(){
+    try{ if(document.fonts&&document.fonts.ready) await document.fonts.ready; }catch(e){}
+    const W=720, tmp=document.createElement('canvas');tmp.width=W;tmp.height=4000;
+    const H=drawReport(tmp.getContext('2d'),W);
+    const c=document.createElement('canvas');c.width=W;c.height=H;
+    drawReport(c.getContext('2d'),W);
+    return await new Promise(res=>c.toBlob(res,'image/png'));
+}
+function summaryFilename(){
+    const nm=((document.getElementById('student-name')||{}).value||'').trim().replace(/\s+/g,'_');
+    return 'svodka'+(nm?('_'+nm):'')+'_'+new Date().toISOString().slice(0,10)+'.png';
+}
+async function saveSummary(){
+    const blob=await makeSummaryBlob();if(!blob)return;
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    a.href=url;a.download=summaryFilename();document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000);
+}
+
+/* звук */
+let actx=null;
+function beep(good){
+    if(state.muted)return;
+    try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+        const o=actx.createOscillator(),g=actx.createGain();
+        o.connect(g);g.connect(actx.destination);
+        if(good){o.frequency.value=660;o.frequency.setValueAtTime(660,actx.currentTime);
+            o.frequency.setValueAtTime(880,actx.currentTime+0.09);}
+        else{o.frequency.value=200;}
+        g.gain.setValueAtTime(0.12,actx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.25);
+        o.start();o.stop(actx.currentTime+0.25);
+    }catch(e){}
+}
+
+/* простое конфетти */
+function confetti(){
+    const emo=['🎉','⭐','🎈','🥳','✨','🌟'];
+    for(let i=0;i<24;i++){
+        const s=document.createElement('div');s.textContent=pick(emo);
+        s.style.cssText=`position:fixed;left:${rand(0,100)}vw;top:-40px;font-size:${rand(18,32)}px;z-index:999;pointer-events:none;transition:transform 2.5s ease-in,opacity 2.5s;`;
+        document.body.appendChild(s);
+        requestAnimationFrame(()=>{s.style.transform=`translateY(${rand(80,110)}vh) rotate(${rand(-180,180)}deg)`;s.style.opacity='0';});
+        setTimeout(()=>s.remove(),2600);
+    }
+}
+</script>
+</body>
+</html>
